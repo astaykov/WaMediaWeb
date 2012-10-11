@@ -1,0 +1,28 @@
+﻿@model Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection
+
+@{
+    ViewBag.Title = "Locators";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+<h2>List</h2>
+<table border="0" cellpadding="3" cellspacing="2">
+@foreach (var loc in Model)
+{
+    <tr>
+        <td>@loc.Id</td>
+        <td>@loc.Type</td>
+        <td>@loc.StartTime</td>
+        <td>@loc.ExpirationDateTime</td>
+        <td>@loc.Path</td>
+    </tr>
+}
+</table>

@@ -1,0 +1,49 @@
+﻿@using Microsoft.WindowsAzure.MediaServices.Client
+@using WaMedia.Common
+
+@model List<WaMedia.Common.Models.Asset>
+@{
+    ViewBag.Title = "Assets";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+<h2>Assets List</h2>
+<table border="0" cellpadding="4" cellspacing="2">
+    <tr>
+        <th>Name</th>
+        <th>State</th>
+        <th>Actions</th>
+    </tr>
+    @foreach (var asset in Model)
+    {
+        <tr>
+            <td>          
+            @asset.MediaAsset.Name</td>
+            <td>@asset.MediaAsset.State</td>
+            <td>
+                @Html.ActionLink("[details]", "Details", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[streaming url]", "GetStreamingUrl", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[progressive mp4 url]", "GetMp4StreamingUrl", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[encode]", "EncodeAndConvert", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[decrypt]", "DecryptAsset", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[publish]", "PublishAsset", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[convert to mp4]", "ConvertToMp4", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[convert to PlayReady]", "ConvertToPlayReady", new { assetId = @asset.MediaAsset.Id })
+                
+            </td>
+        </tr>
+    }
+</table>
+@using (Html.BeginForm("CreateMediaAsset", "Assets", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="mediasource" /><br />
+    <input type="submit" value="Create Asset" />
+}

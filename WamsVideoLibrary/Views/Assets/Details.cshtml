@@ -1,0 +1,59 @@
+﻿@model WaMedia.Common.Models.Asset
+
+@{
+    ViewBag.Title = "Asset Details";
+    ViewBag.Message = @Model.MediaAsset.Name;
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+<h2>Asset Details for @Model.MediaAsset.Name</h2>
+State: @Model.MediaAsset.State<br />
+Id: @Model.MediaAsset.Id
+<h3>Files</h3>
+<table border="0" cellpadding="3" cellspacing="2">
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Mime Type</td>
+            <td>Encrypted</td>
+            <td>Primary</td>
+            <td>File Size</td>
+    </tr>
+    @foreach (var file in @Model.MediaAsset.Files)
+    {
+        <tr>
+            <td>@file.Id</td>
+            <td>@file.Name</td>
+            <td>@file.MimeType</td>
+            <td>@file.IsEncrypted</td>
+            <td>@file.IsPrimary</td>
+            <td>@file.ContentFileSize</td>
+        </tr>
+        
+    }
+</table>
+<h3>Associated Locators</h3>
+<table border="0" cellpadding="3" cellspacing="2">
+     <tr>
+        <th>Id</th>
+        <th>Path</th>
+        <th>Type</th>
+     </tr>
+
+ @foreach (var locator in @Model.MediaAsset.Locators)
+ {
+     <tr>
+        <td>@locator.Id</td>
+        <td>@locator.Path</td>
+        <td>@locator.Type</td>
+     </tr>
+ }
+</table>

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WaMedia.Common", "WaMedia.Common\WaMedia.Common.csproj", "{DB2FCA1E-F0AC-4EAB-817B-EEAB8560187C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WamsVideoLibrary", "WamsVideoLibrary\WamsVideoLibrary.csproj", "{6F13778E-FA23-4679-8B6C-95FD46A696A0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{683D6E31-F4F6-47B7-B622-EB1716996AFC}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.txt = Readme.txt
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DB2FCA1E-F0AC-4EAB-817B-EEAB8560187C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB2FCA1E-F0AC-4EAB-817B-EEAB8560187C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB2FCA1E-F0AC-4EAB-817B-EEAB8560187C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB2FCA1E-F0AC-4EAB-817B-EEAB8560187C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F13778E-FA23-4679-8B6C-95FD46A696A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F13778E-FA23-4679-8B6C-95FD46A696A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F13778E-FA23-4679-8B6C-95FD46A696A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F13778E-FA23-4679-8B6C-95FD46A696A0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<Microsoft.WindowsAzure.MediaServices.Client.IJob>
+
+@{
+    ViewBag.Title = "Jobs";
+    int row = 0;
+}
+<style type="text/css"> 
+    .odd
+    {
+        background-color: Silver;
+    }
+    .even
+    {
+        background-color: transparent;
+    }
+</style>
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+<h2>List</h2>
+<table border="0" cellpadding="3" cellspacing="2">
+<tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>StartTime</th>
+        <th>EndTime</th>
+        <th>State</th>
+        <th>Actions</th>
+    </tr>
+    
+@foreach (var job in Model)
+{
+    ++row;
+    var cssClass = (row % 2 == 0) ? "even" : "odd";
+    <tr class="@cssClass">
+        <td>@job.Id</td>
+        <td>@job.Name</td>
+        <td>@job.StartTime</td>
+        <td>@job.EndTime</td>
+        <td>@job.State</td>
+        <td>@Html.ActionLink("[delete]", "DeleteJob", new { jobId = @job.Id })</td>
+    </tr>
+    <tr class="@cssClass">
+        <td valign="top"><span style="cursor:pointer" onclick="$('#tasks-@row').toggle()">Tasks (click to show/hide):</span></td>
+        <td colspan="5">
+            <table border="0" cellpadding="2" cellspacing="1" id="tasks-@row" style="display: none;">
+                <tr>
+                    <th>Name</th>
+                    <th>State</th>
+                    <th>Progress (%)</th>
+                    <th>Start</th>
+                    <th>End</th>
+                </tr>
+                 @foreach (var task in job.Tasks)
+            {
+                <tr>
+                    <td>@task.Name</td>
+                    <td>@task.State<br />
+                     @foreach (var error in task.ErrorDetails)
+                     { 
+                        <span>@error.Message</span><br />
+                     }
+                    </td>
+                    <td>@task.Progress</td>
+                    <td>@task.StartTime</td>
+                    <td>@task.EndTime</td>
+                </tr>
+            }
+            </table>
+           
+        </td>
+    </tr>
+}
+</table>

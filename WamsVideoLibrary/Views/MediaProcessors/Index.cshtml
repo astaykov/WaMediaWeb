@@ -1,0 +1,38 @@
+﻿@model Microsoft.WindowsAzure.MediaServices.Client.MediaProcessorCollection
+
+@{
+    ViewBag.Title = "Media Processors";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+<h2>List of available media processors</h2>
+<table border="0" cellpadding="3" cellspacing="2">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>LastModified</th>
+        <th>Sku</th>
+        <th>Vendor</th>
+        <th>LastModified</th>
+    </tr>
+
+@foreach (var mproc in Model)
+{
+    <tr>
+        <td>@mproc.Id</td>
+        <td>@mproc.Name (@mproc.Version)</td>
+        <td>@mproc.LastModified</td>
+        <td>@mproc.Sku</td>
+        <td>@mproc.Vendor</td>
+        <td>@mproc.LastModified</td>
+    </tr>
+}
+</table>
