@@ -158,6 +158,15 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
         }
 
 
+        public void CancelJob(string jobId)
+        {
+            IJob job = this.MediaService.MediaContext.Jobs.Where(j => j.Id.Equals(jobId)).FirstOrDefault();
+            if (job != null)
+            {
+                job.Cancel();
+            }
+        }
+
         public string GetPlayReadyTask(string contentKey = "", string keyId = "", string keySeed = "", string playReadyServerUrl = "")
         {
             string task = @"<taskDefinition xmlns='http://schemas.microsoft.com/iis/media/v4/TM/TaskDefinition#'>
@@ -180,5 +189,7 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
 </taskDefinition>";
             return string.Format(task, contentKey, keyId, keySeed, playReadyServerUrl);
         }
+
+
     }
 }

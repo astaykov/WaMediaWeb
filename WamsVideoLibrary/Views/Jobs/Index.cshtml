@@ -45,7 +45,10 @@
         <td>@job.StartTime</td>
         <td>@job.EndTime</td>
         <td>@job.State</td>
-        <td>@Html.ActionLink("[delete]", "DeleteJob", new { jobId = @job.Id })</td>
+        <td style="white-space: nowrap;">
+            @Html.ActionLink("[cancel]", "CancelJob", new { jobId = @job.Id })<br />
+            @Html.ActionLink("[~ delete ~]", "DeleteJob", new { jobId = @job.Id })
+        </td>
     </tr>
     <tr class="@cssClass">
         <td valign="top"><span style="cursor:pointer" onclick="$('#tasks-@row').toggle()">Tasks (click to show/hide):</span></td>

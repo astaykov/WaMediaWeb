@@ -18,5 +18,6 @@ namespace WaMedia.Common.Contracts
         void CreateAsset(string pathToFile);
         void Publish(string assetId);
         void AssignThumbnail(string assetId);
+        void DeleteAsset(string assetId);
     }
 }

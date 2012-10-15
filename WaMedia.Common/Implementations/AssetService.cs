@@ -118,5 +118,22 @@ namespace WaMedia.Common.Implementations
                 file.DownloadToFile(tmpName);
             }
         }
+
+
+        public void DeleteAsset(string assetId)
+        {
+            var asset = this.GetAssetById(assetId);
+
+            foreach (var locator in this.MediaService.MediaContext.Locators.Where(l => l.AssetId.Equals(assetId)))
+            {
+                this.MediaService.MediaContext.Locators.Revoke(locator);
+            }
+            for (int i = 0; i < asset.MediaAsset.ContentKeys.Count; i++)
+			{
+                asset.MediaAsset.ContentKeys.RemoveAt(0);
+			}
+            this.MediaService.MediaContext.Assets.Update(asset.MediaAsset);
+            this.MediaService.MediaContext.Assets.Delete(asset.MediaAsset);
+        }
     }
 }

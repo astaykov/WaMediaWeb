@@ -27,6 +27,12 @@ namespace WaMediaWeb.Controllers
             this.JobService.DeleteJob(jobId);
             return RedirectToAction("Index");
         }
+
+        public ActionResult CancelJob(string jobId)
+        {
+            this.JobService.CancelJob(jobId);
+            return RedirectToAction("Index");
+        }
         
     }
 }

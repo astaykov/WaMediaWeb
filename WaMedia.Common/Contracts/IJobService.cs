@@ -16,6 +16,7 @@ namespace WaMedia.Common.Contracts
         void CreateNewJob(Asset asset, string mediaEncoder, string taskPreset);
         void DecryptAsset(Asset theAsset);
         void DeleteJob(string jobId);
+        void CancelJob(string jobId);
         string GetPlayReadyTask(string contentKey = "", string keyId = "", string keySeed = "", string playReadyServerUrl = "");
     }
 }

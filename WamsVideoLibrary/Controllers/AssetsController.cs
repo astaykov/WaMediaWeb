@@ -91,5 +91,11 @@ namespace WaMediaWeb.Controllers
             this.JobService.CreateNewJob(asset, MediaEncoders.PLAY_READY_ENCODER, this.JobService.GetPlayReadyTask(keySeed: PlayReady.DEV_SERVER_KEY_SEED, playReadyServerUrl: PlayReady.DEV_SERVER_LICENSE_URL));
             return RedirectToAction("Index", "Jobs");
         }
+
+        public ActionResult DeleteAsset(string assetId)
+        {
+            this.AssetService.DeleteAsset(assetId);
+            return RedirectToAction("Index");
+        }
     }
 }

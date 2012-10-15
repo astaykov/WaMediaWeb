@@ -41,6 +41,7 @@ Following contracts are implemented:
 		void CreateAsset(string pathToFile) - Creates asset from local filename. So far, this is the only option we have with the current .NET API.
         void Publish(string assetId) - tries to publish the asset (executing PUBLISH action). Not working on the WAMS so far - the WAMS is having issues publishing the asset
         void AssignThumbnail(string assetId) - tries to assign thumbnail to an existing asset. Not working (not implemented) due to too much overhead complexity for implementing such a trivial feature
+  [new] void DelteAsset(string assetId) - deletes an Asset. Of course by removing associated locators and content keys first
 
   IJobService - contract for managing Media Services Jobs
         IMediaService MediaService  - reference to the IMediaService
@@ -50,6 +51,7 @@ Following contracts are implemented:
         void CreateNewJob(Asset asset, string mediaEncoder, string taskPreset) - creates single job with given media encoder name and task preset.
         void DecryptAsset(Asset theAsset) - executes single task on decrypting a storage encrypted asset
         void DeleteJob(string jobId) - deletes given job
+  [new] void CancelJob(string jobId) - cancels a job
         string GetPlayReadyTask(string contentKey = "", string keyId = "", string keySeed = "", string playReadyServerUrl = "") - gets a task preset for PlayReady protection of media
 
   ILocatorService - contract used to get streaming origins
