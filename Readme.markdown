@@ -11,10 +11,10 @@ The idea behid the contracts is to logically separate different operations on th
 The application has 6 menu items: [Home] [Assets] [Jobs] [Procs] [Locators] [~ Reset ~]:
 * [Home] - is the main screen with some marketing info
 * [Assets] - the Asset relate screen. Here you can create asset, encode to smooth streaming, protect with play ready, get the smooth streming url, decrypt (if it is decrypted). Please note the following contraints while working with Asset:
- ** Only ISO MP4 video Assets can be encoded into Smooth Streaming format (the [encode] link), so first use the [convert to mp4] link, if the asset is not MP4
- ** Only Smooth streaming asset can be PlayReady protected! So make sure you execute this over an asset, which is Smooth Streaming encoded
- ** You can get the Streaming URL for Smooth Streaming (and Play Ready protected) assets only
- ** You can get the mp4 progressive download link for MP4 assets only
+ * Only ISO MP4 video Assets can be encoded into Smooth Streaming format (the [encode] link), so first use the [convert to mp4] link, if the asset is not MP4
+ * Only Smooth streaming asset can be PlayReady protected! So make sure you execute this over an asset, which is Smooth Streaming encoded
+ * You can get the Streaming URL for Smooth Streaming (and Play Ready protected) assets only
+ * You can get the mp4 progressive download link for MP4 assets only
 * [Jobs] - the Jobs screen. Here you can view all the jobs with their states and accosiated tasks. You can delete job from this screen
 * [Procs] - a static list of available media processors
 * [Locators] - a static list of locators that are currently created for the media account
