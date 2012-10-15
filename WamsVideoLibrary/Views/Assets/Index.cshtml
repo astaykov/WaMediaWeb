@@ -5,6 +5,10 @@
 @{
     ViewBag.Title = "Assets";
 }
+@section head
+{
+    <link href="@Url.Content("~/Content/fileuploader.css")" rel="stylesheet" type="text/css" />
+}
 @section featured {
     <section class="featured">
         <div class="content-wrapper">
@@ -14,6 +18,25 @@
             </hgroup>
         </div>
     </section>
+}
+@section scripts
+{
+    <script type="text/javascript" src="@Url.Content("~/Scripts/fileuploader.js")"></script>
+    <script type="text/javascript">
+        $(document).ready(function ()
+        {
+
+            var uploader = new qq.FileUploader({
+                // pass the dom node (ex. $(selector)[0] for jQuery users)  -- change this
+                element: $('#mediasource')[0],
+                // path to server-side upload script
+                action: '/Assets/CreateMediaAsset/',
+                uploadButtonText: 'Create Media Asset'
+            });
+
+
+        });
+    </script>
 }
 <h2>Assets List</h2>
 <table border="0" cellpadding="4" cellspacing="2">
@@ -42,8 +65,4 @@
         </tr>
     }
 </table>
-@using (Html.BeginForm("CreateMediaAsset", "Assets", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <input type="file" name="mediasource" /><br />
-    <input type="submit" value="Create Asset" />
-}
+<div id="mediasource"></div>

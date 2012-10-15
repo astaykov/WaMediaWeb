@@ -135,5 +135,15 @@ namespace WaMedia.Common.Implementations
             this.MediaService.MediaContext.Assets.Update(asset.MediaAsset);
             this.MediaService.MediaContext.Assets.Delete(asset.MediaAsset);
         }
+
+        public void Rename(string assetId, string newName)
+        {
+            var asset = this.GetAssetById(assetId);
+            if (asset != null)
+            {
+                asset.MediaAsset.Name = newName;
+                this.MediaService.MediaContext.Assets.Update(asset.MediaAsset);
+            }
+        }
     }
 }

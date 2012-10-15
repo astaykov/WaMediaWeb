@@ -20,6 +20,12 @@ The application has 6 menu items: [Home] [Assets] [Jobs] [Procs] [Locators] [~ R
 * [Locators] - a static list of locators that are currently created for the media account
 * [~ RESET ~] - resets the whole Media Services account. This includes: deleting all the jobs, deleting all locators, deleting all assets.
 
+__UPDATE__ Added AJAX Upload with progress for creating assets. However, please do note that the creation of an asset is two step process: 
+ 1. User uploads filr to your server (progress can be communicated back)
+ 2. That file is being uploaded to BLOB storage (progress cannot be communicated back) - an automatic process handled by the CloudMediaContext
+ Because of that, note that even the progress is filled up at 100%, the asset is not yet ready and you have to wait untill full upload of media file to the Blob storage.
+ Also, alhtough the AJAX uploaded may report upload failed, the upload is most probably fine. I am working on implementing the feature of the uploader to correctly report the result.
+
 Following contracts are implemented
 
 ### IMediaService ###
@@ -41,6 +47,7 @@ Contract for managing Assets. It has following members
   * void Publish(string assetId) - tries to publish the asset (executing PUBLISH action). Not working on the WAMS so far - the WAMS is having issues publishing the asset
   * void AssignThumbnail(string assetId) - tries to assign thumbnail to an existing asset. Not working (not implemented) due to too much overhead complexity for implementing such a trivial feature
   * __[new]__ void DelteAsset(string assetId) - deletes an Asset. Of course by removing associated locators and content keys first
+  * __[new]__ void Rename(string assetId, string new Name) - renames an Asset
 
 ### IJobService ###
 Contract for managing Media Services Jobs.

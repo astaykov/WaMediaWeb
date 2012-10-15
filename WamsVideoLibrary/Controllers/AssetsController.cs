@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using WaMediaWeb.Models;
 using WaMedia.Common;
+using System.Dynamic;
 
 namespace WaMediaWeb.Controllers
 {
@@ -20,13 +21,26 @@ namespace WaMediaWeb.Controllers
 
         public ActionResult CreateMediaAsset()
         {
-            var file = Request.Files["mediasource"];
             var tmpName = System.IO.Path.GetTempPath();
-            string pathToTempFile = System.IO.Path.Combine(tmpName, file.FileName);
-            file.SaveAs(pathToTempFile);
+            string pathToTempFile = System.IO.Path.Combine(tmpName, "Unknown");
+            if (Request.Files.Count > 0)
+            {
+                var file = Request.Files.Get(0);
+                pathToTempFile = System.IO.Path.Combine(tmpName, file.FileName);
+                file.SaveAs(pathToTempFile);
+            }
+            else
+            {
+                pathToTempFile = System.IO.Path.Combine(tmpName, Request.Params["qqfile"]);
+                using (var fs = System.IO.File.Create(pathToTempFile))
+                {
+                    Request.InputStream.CopyTo(fs);
+                    fs.Flush();
+                }
+            }
             this.AssetService.CreateAsset(pathToTempFile);
             System.IO.File.Delete(pathToTempFile);
-            return RedirectToAction("Index"); 
+            return Json(@"{success: true}");
         }
 
         public ActionResult EncodeAndConvert(string assetId)
@@ -96,6 +110,12 @@ namespace WaMediaWeb.Controllers
         {
             this.AssetService.DeleteAsset(assetId);
             return RedirectToAction("Index");
+        }
+
+        public ActionResult Rename(string assetId, string newName)
+        {
+            this.AssetService.Rename(assetId, newName);
+            return RedirectToAction("Details", new { assetId = assetId });
         }
     }
 }

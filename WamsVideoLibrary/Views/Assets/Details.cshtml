@@ -17,6 +17,15 @@
 <h2>Asset Details for @Model.MediaAsset.Name</h2>
 State: @Model.MediaAsset.State<br />
 Id: @Model.MediaAsset.Id
+@using (Html.BeginForm("Rename", "Assets", FormMethod.Post))
+{ 
+    <div>
+        <input type="text" name="newName" value="@Model.MediaAsset.Name" />
+        <input type="hidden" name="assetId" value="@Model.MediaAsset.Id" />
+        <br />
+        <input type="submit" value="rename" />
+    </div>
+}
 <h3>Files</h3>
 <table border="0" cellpadding="3" cellspacing="2">
         <tr>
