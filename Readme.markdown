@@ -20,9 +20,9 @@ The application has 6 menu items: [Home] [Assets] [Jobs] [Procs] [Locators] [~ R
 * [Locators] - a static list of locators that are currently created for the media account
 * [~ RESET ~] - resets the whole Media Services account. This includes: deleting all the jobs, deleting all locators, deleting all assets.
 
-## Following contracts are implemented ##
+Following contracts are implemented
 
-  ### IMediaService ###
+### IMediaService ###
   Base contract, which is referenced by all others, as it holds reference to the CloudMediaContext.
   Unfortunatelly the CloudMediaContext does not implement any interface and cannot be abstracted as a Contract.
   IMediaService has following members
