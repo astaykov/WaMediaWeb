@@ -23,16 +23,16 @@ The application has 6 menu items: [Home] [Assets] [Jobs] [Procs] [Locators] [~ R
 Following contracts are implemented
 
 ### IMediaService ###
-  Base contract, which is referenced by all others, as it holds reference to the CloudMediaContext.
-  Unfortunatelly the CloudMediaContext does not implement any interface and cannot be abstracted as a Contract.
-  IMediaService has following members
+Base contract, which is referenced by all others, as it holds reference to the CloudMediaContext.
+Unfortunatelly the CloudMediaContext does not implement any interface and cannot be abstracted as a Contract.
+IMediaService has following members
   * CloudMediaContext MediaContext 
   * void Reset() - resets the whole Media Service account. Just leaves the Content Keys. Be careful with the content Keys. If you delete them, you will no longer be able to create a non-empty asset!
   * IMediaProcessor GetMediaProcessorByName(string name) - retrieves an instance of media processor, which can later be used to create Tasks
 
 
-  ### IAssetService ###
-  Contract for managing Assets. It has following members
+### IAssetService ###
+Contract for managing Assets. It has following members
   * IMediaService MediaService - reference to the IMediaService
   * IQueryable<Asset> Assets - Asset is local model created with the idea to provide additional properties like Thumbnail, but it appeared to be harder to implement thumbnailing, so it is depricated feature for now
   * Asset GetAssetById(string assetId) - As its name suggests, this method retrieves an assed by given ID
@@ -42,8 +42,8 @@ Following contracts are implemented
   * void AssignThumbnail(string assetId) - tries to assign thumbnail to an existing asset. Not working (not implemented) due to too much overhead complexity for implementing such a trivial feature
   * __[new]__ void DelteAsset(string assetId) - deletes an Asset. Of course by removing associated locators and content keys first
 
-  ### IJobService ###
-  Contract for managing Media Services Jobs.
+### IJobService ###
+Contract for managing Media Services Jobs.
   * IMediaService MediaService  - reference to the IMediaService
   * IEnumerable<IJob> Jobs - a list of all Jobs that are registered witht he given Media Services account
   * void CreateEncodeToSmoothStreamingJob(Asset asset, bool decrypt = false) - creates JOB with 2 parallel tasks. First task is to create Smooth Streaming asset. Second task is to Create thumbnails. Note that Smooth Streaming can only be produced of an MP4 asset! The decrypt parameter is used to identify whether to include a storage decryption immediately after converting.
@@ -53,8 +53,8 @@ Following contracts are implemented
   * __[new]__ void CancelJob(string jobId) - cancels a job
   * string GetPlayReadyTask(string contentKey = "", string keyId = "", string keySeed = "", string playReadyServerUrl = "") - gets a task preset for PlayReady protection of media
 
-  ### ILocatorService ###
-  Contract used to get streaming origins.
+### ILocatorService ###
+Contract used to get streaming origins.
   * IMediaService MediaService  - reference to the IMediaService
   * string GetSmoothStreamingOriginLocator(Asset assetToStream) - gets smooth streaming origin locator
   * string GetMp4StreamingOriginLocator(Asset assetToStream) - gets progressive download locator with SAS signature
