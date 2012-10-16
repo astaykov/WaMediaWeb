@@ -24,6 +24,11 @@ namespace WaMedia.Common.Implementations
             this._mediaContext = new CloudMediaContext(_mediaAccount, _mediaKey);
         }
 
+        public MediaService(CloudMediaContext ctx)
+        {
+            this._mediaContext = ctx;
+        }
+
         private Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext _mediaContext;
         public Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext MediaContext
         {

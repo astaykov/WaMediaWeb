@@ -40,7 +40,7 @@ namespace WaMediaWeb.Controllers
             }
             this.AssetService.CreateAsset(pathToTempFile);
             System.IO.File.Delete(pathToTempFile);
-            return Json(@"{success: true}");
+            return Content(@"{""success"": true}");
         }
 
         public ActionResult EncodeAndConvert(string assetId)

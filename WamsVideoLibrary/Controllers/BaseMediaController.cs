@@ -5,6 +5,8 @@ using System.Web;
 using System.Web.Mvc;
 using WaMedia.Common.Implementations;
 using WaMedia.Common.Contracts;
+using WamsVideoLibrary;
+using Microsoft.WindowsAzure.MediaServices.Client;
 
 namespace WaMediaWeb.Controllers
 {
@@ -15,12 +17,16 @@ namespace WaMediaWeb.Controllers
         private IJobService _jobService;
         private ILocatorService _locatorService;
 
-        public BaseMediaController()
+        protected override void Initialize(System.Web.Routing.RequestContext requestContext)
         {
-            this._mediaService = new MediaService();
-            this._assetSErvice = new AssetService(this.MediaService);
-            this._jobService = new JobService(this.MediaService);
-            this._locatorService = new LocatorService(this.MediaService);
+            if (this._mediaService == null)
+            {
+                this._mediaService = new MediaService((CloudMediaContext)requestContext.HttpContext.Application["mctx"]);
+                this._assetSErvice = new AssetService(this.MediaService);
+                this._jobService = new JobService(this.MediaService);
+                this._locatorService = new LocatorService(this.MediaService);
+            }
+            base.Initialize(requestContext);
         }
 
         protected IMediaService MediaService

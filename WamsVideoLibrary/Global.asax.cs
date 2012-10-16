@@ -6,6 +6,8 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Microsoft.WindowsAzure.MediaServices.Client;
+using System.Configuration;
 
 namespace WamsVideoLibrary
 {
@@ -23,6 +25,18 @@ namespace WamsVideoLibrary
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
+
+            // keep an instance of the CloudMediaContext in the Application State
+            // because its creation is expensive
+            this.InitiMediaContext();
         }
+
+        private void InitiMediaContext()
+        {
+            string mediaAccount = ConfigurationManager.AppSettings["MediaAccount"];
+            string mediaKey = ConfigurationManager.AppSettings["MediaKey"];
+            Application["mctx"] = new CloudMediaContext(mediaAccount, mediaKey);
+        }
+
     }
 }
