@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
-using WaMediaWeb.Models;
 using WaMedia.Common;
-using System.Dynamic;
+using WaMediaWeb.Models;
 
 namespace WaMediaWeb.Controllers
 {
@@ -16,7 +12,8 @@ namespace WaMediaWeb.Controllers
 
         public ActionResult Index()
         {
-            return View(this.AssetService.Assets.OrderByDescending(a => a.MediaAsset.LastModified).ToList());
+            var model = this.AssetService.Assets.OrderByDescending(a => a.MediaAsset.LastModified).ToList();
+            return View(model);
         }
 
         public ActionResult CreateMediaAsset()
@@ -40,7 +37,7 @@ namespace WaMediaWeb.Controllers
             }
             this.AssetService.CreateAsset(pathToTempFile);
             System.IO.File.Delete(pathToTempFile);
-            return Content(@"{""success"": true}");
+            return Json(new { success = true });
         }
 
         public ActionResult EncodeAndConvert(string assetId)
@@ -55,7 +52,7 @@ namespace WaMediaWeb.Controllers
             var asset = this.AssetService.GetAssetById(assetId);
             if (asset == null)
             {
-                return RedirectToAction("Index");
+                return HttpNotFound();
             }
             return View(asset);
         }
@@ -64,9 +61,11 @@ namespace WaMediaWeb.Controllers
         {
             var asset = this.AssetService.GetAssetById(assetId);
             string streamingUrl = this.LocatorService.GetSmoothStreamingOriginLocator(asset);
-            StreamingUrlViewModel model = new StreamingUrlViewModel();
-            model.Url = streamingUrl;
-            return View(model);
+            if (string.IsNullOrWhiteSpace(streamingUrl))
+            {
+                return HttpNotFound();
+            }
+            return View(new StreamingUrlViewModel() { Url = streamingUrl });
         }
 
         public ActionResult GetMp4StreamingUrl(string assetId)
@@ -77,7 +76,6 @@ namespace WaMediaWeb.Controllers
             model.Url = streamingUrl;
             return View("GetStreamingUrl", model);
         }
-
 
 
         public ActionResult DecryptAsset(string assetId)
