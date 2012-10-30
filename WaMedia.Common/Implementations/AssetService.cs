@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Microsoft.WindowsAzure.MediaServices.Client;
 using WaMedia.Common.Contracts;
 using WaMedia.Common.Models;
-using Microsoft.WindowsAzure.MediaServices.Client;
 
 namespace WaMedia.Common.Implementations
 {
@@ -22,25 +20,21 @@ namespace WaMedia.Common.Implementations
 
         public IQueryable<Models.Asset> Assets
         {
-            get {
-                var result = (
-                    from a in this.MediaService.MediaContext.Assets 
-                    select a).ToList();
-                return result.Select( a => new Asset { MediaAsset = a, ThumbnailUrl = "" }).AsQueryable();
+            get
+            {
+                return this.MediaService.MediaContext.Assets.ToList().Select(a => new Asset { MediaAsset = a, ThumbnailUrl = "" }).AsQueryable();
             }
         }
 
         public Models.Asset GetAssetById(string assetId)
         {
-            var assetQuery = from a in this.MediaService.MediaContext.Assets
-                             where a.Id.Equals(assetId)
-                             select a;
-            var iAsset = assetQuery.FirstOrDefault();
-            if (iAsset != null)
+            var asset = this.MediaService.MediaContext.Assets.Where(x => x.Id.Equals(assetId)).FirstOrDefault();
+
+            if (null == asset)
             {
-                return new Asset { MediaAsset = iAsset, ThumbnailUrl = "" };
+                return null;
             }
-            return null;
+            return new Asset { MediaAsset = asset, ThumbnailUrl = "" };
         }
 
         [Obsolete("Don't use! There must be a smarter way to do that!")]
@@ -105,9 +99,9 @@ namespace WaMedia.Common.Implementations
             var asset = this.GetAssetById(assetId);
             var files = (
                 from a in this.MediaService.MediaContext.Assets
-                    where a.ParentAssets.Contains(asset.MediaAsset)
-                     && a.Files.Count > 0
-                     && a.Files.Where( f => f.Name.EndsWith(".jpg") && f.IsPrimary).FirstOrDefault() != null
+                where a.ParentAssets.Contains(asset.MediaAsset)
+                 && a.Files.Count > 0
+                 && a.Files.Where(f => f.Name.EndsWith(".jpg") && f.IsPrimary).FirstOrDefault() != null
                 select a.Files.Where(f => f.Name.EndsWith(".jpg") && f.IsPrimary).FirstOrDefault()
                     );
             var file = files.FirstOrDefault();
@@ -129,9 +123,9 @@ namespace WaMedia.Common.Implementations
                 this.MediaService.MediaContext.Locators.Revoke(locator);
             }
             for (int i = 0; i < asset.MediaAsset.ContentKeys.Count; i++)
-			{
+            {
                 asset.MediaAsset.ContentKeys.RemoveAt(0);
-			}
+            }
             this.MediaService.MediaContext.Assets.Update(asset.MediaAsset);
             this.MediaService.MediaContext.Assets.Delete(asset.MediaAsset);
         }

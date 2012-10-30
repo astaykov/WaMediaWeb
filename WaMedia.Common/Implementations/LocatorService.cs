@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using WaMedia.Common.Contracts;
 using Microsoft.WindowsAzure.MediaServices.Client;
+using WaMedia.Common.Contracts;
 
 namespace WaMedia.Common.Implementations
 {
@@ -24,12 +22,12 @@ namespace WaMedia.Common.Implementations
         {
             // Get a reference to the manifest file from the collection 
             // of streaming files in the asset. 
-            var theManifest =
-                                from f in assetToStream.MediaAsset.Files
-                                where f.Name.EndsWith(".ism")
-                                select f;
+            var manifestFile = assetToStream.MediaAsset.Files.Where(x => x.Name.EndsWith(".ism")).FirstOrDefault();
             // Cast the reference to a true IFileInfo type. 
-            IFileInfo manifestFile = theManifest.First();
+            if (null == manifestFile)
+            {
+                return null;
+            }
 
             // Create an 1-day readonly access policy. 
             IAccessPolicy streamingPolicy = this.MediaService.MediaContext.AccessPolicies.Create("Streaming policy",
