@@ -38,6 +38,12 @@
         });
     </script>
 }
+<h2>Create Empty Asset</h2>
+@using (Html.BeginForm("CreateEmptyAsset", "Assets", FormMethod.Post))
+{
+    <input type="text" name="name" />
+    <inpyt type="submit" value="create" />
+}
 <h2>Assets List</h2>
 <table border="0" cellpadding="4" cellspacing="2">
     <tr>
@@ -54,6 +60,7 @@
             <td>
                 @Html.ActionLink("[details]", "Details", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[streaming url]", "GetStreamingUrl", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[streaming CDN]", "GetCDNStreamingUrl", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[progressive mp4 url]", "GetMp4StreamingUrl", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[encode]", "EncodeAndConvert", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[decrypt]", "DecryptAsset", new { assetId = @asset.MediaAsset.Id })

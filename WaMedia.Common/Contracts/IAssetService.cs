@@ -16,6 +16,7 @@ namespace WaMedia.Common.Contracts
         [Obsolete("Dont use!")]
         string ThumbnailUrl(IAsset asset);
         void CreateAsset(string pathToFile);
+        void CreateEmptyAsset(string name);
         void Publish(string assetId);
         void AssignThumbnail(string assetId);
         void DeleteAsset(string assetId);
