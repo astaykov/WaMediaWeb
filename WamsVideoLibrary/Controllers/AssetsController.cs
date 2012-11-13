@@ -38,12 +38,15 @@ namespace WaMediaWeb.Controllers
             this.AssetService.CreateAsset(pathToTempFile);
             System.IO.File.Delete(pathToTempFile);
             return Json(new { success = true });
+<<<<<<< HEAD
         }
 
         public ActionResult CreateEmptyAsset(string name)
         {
             this.AssetService.CreateEmptyAsset(name);
             return RedirectToAction("index");
+=======
+>>>>>>> b4b34180884a3bc8c63ecc47b4bb387d4a294db6
         }
 
         public ActionResult EncodeAndConvert(string assetId)
@@ -72,6 +75,7 @@ namespace WaMediaWeb.Controllers
                 return HttpNotFound();
             }
             return View(new StreamingUrlViewModel() { Url = streamingUrl });
+<<<<<<< HEAD
         }
 
         public ActionResult GetCDNStreamingUrl(string assetId)
@@ -83,6 +87,8 @@ namespace WaMediaWeb.Controllers
                 return HttpNotFound();
             }
             return View("GetStreamingUrl", new StreamingUrlViewModel() { Url = streamingUrl });
+=======
+>>>>>>> b4b34180884a3bc8c63ecc47b4bb387d4a294db6
         }
 
         public ActionResult GetMp4StreamingUrl(string assetId)
