@@ -21,5 +21,6 @@ namespace WaMedia.Common.Contracts
         void AssignThumbnail(string assetId);
         void DeleteAsset(string assetId);
         void Rename(string assetId, string newName);
+        void CopyFromBlob(string destinationSasUri, string srcBlobSasUri);
     }
 }

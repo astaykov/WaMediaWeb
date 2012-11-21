@@ -26,6 +26,16 @@ Id: @Model.MediaAsset.Id
         <input type="submit" value="rename" />
     </div>
 }
+@using (Html.BeginForm("CopyFromBlob", "Assets", FormMethod.Post))
+{
+    <h3>Copy from Blob</h3>
+   <div>
+        <input type="text" name="srcBlob" value="" />
+        <input type="hidden" name="assetId" value="@Model.MediaAsset.Id" />
+        <br />
+        <input type="submit" value="copy" />
+    </div>
+}
 <h3>Files</h3>
 <table border="0" cellpadding="3" cellspacing="2">
         <tr>

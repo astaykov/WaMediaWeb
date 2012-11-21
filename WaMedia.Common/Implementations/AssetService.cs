@@ -3,6 +3,8 @@ using System.Linq;
 using Microsoft.WindowsAzure.MediaServices.Client;
 using WaMedia.Common.Contracts;
 using WaMedia.Common.Models;
+using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 
 namespace WaMedia.Common.Implementations
 {
@@ -143,6 +145,30 @@ namespace WaMedia.Common.Implementations
         public void CreateEmptyAsset(string name)
         {
             this.MediaService.MediaContext.Assets.CreateEmptyAsset(name, AssetCreationOptions.None);
+        }
+
+
+        public void CopyFromBlob(string destinationSasUri, string srcBlobSasUri)
+        {
+            Uri destUri = new Uri(destinationSasUri);
+            CloudBlockBlob blob = new CloudBlockBlob(new Uri(srcBlobSasUri));
+            string fileName = (blob.Name.Contains("/")) 
+                ? blob.Name.Substring(blob.Name.LastIndexOf("/"))
+                : blob.Name;
+            CloudBlobContainer cbc = new CloudBlobContainer(destUri);
+
+            //UriBuilder ub = new UriBuilder(destUri);
+            //ub.Path += "/" + fileName;
+            //CloudBlockBlob destBlob = new CloudBlockBlob(ub.Uri);
+            CloudBlockBlob destBlob = cbc.GetBlockBlobReference(fileName);
+            BlobRequestOptions bro = new BlobRequestOptions();
+            bro.RetryPolicy = new Microsoft.WindowsAzure.Storage.RetryPolicies.ExponentialRetry(TimeSpan.FromMilliseconds(150), 5);
+            destBlob.StartCopyFromBlob(blob, options: bro);
+
+
+           // destBlob.UploadFromStream(System.IO.File.OpenRead(@"D:\Install.txt"));
+
+            System.Diagnostics.Debug.WriteLine(destBlob.Name);
         }
     }
 }

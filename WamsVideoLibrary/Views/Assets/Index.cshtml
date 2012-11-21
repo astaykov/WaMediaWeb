@@ -42,7 +42,7 @@
 @using (Html.BeginForm("CreateEmptyAsset", "Assets", FormMethod.Post))
 {
     <input type="text" name="name" />
-    <inpyt type="submit" value="create" />
+    <input type="submit" value="create" />
 }
 <h2>Assets List</h2>
 <table border="0" cellpadding="4" cellspacing="2">
@@ -67,6 +67,7 @@
                 @Html.ActionLink("[publish]", "PublishAsset", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[convert to mp4]", "ConvertToMp4", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[convert to PlayReady]", "ConvertToPlayReady", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[SAS URL]", "GetSasUrl", new { assetId = @asset.MediaAsset.Id });
                 @Html.ActionLink("[~ DELETE ~]", "DeleteAsset", new { assetId = @asset.MediaAsset.Id })
             </td>
         </tr>

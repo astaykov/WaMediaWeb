@@ -135,5 +135,18 @@ namespace WaMediaWeb.Controllers
             this.AssetService.Rename(assetId, newName);
             return RedirectToAction("Details", new { assetId = assetId });
         }
+
+        public ActionResult GetSasUrl(string assetId)
+        {
+            var sasLoc = this.LocatorService.GetSasLocator(this.AssetService.GetAssetById(assetId));
+            return View((object)sasLoc);
+        }
+
+        public ActionResult CopyFromBlob(string assetId, string srcBlob)
+        {
+            var src = this.LocatorService.GetSasLocator(this.AssetService.GetAssetById(assetId));
+            this.AssetService.CopyFromBlob(src, srcBlob);
+            return RedirectToAction("Details", new { assetId = assetId });
+        }
     }
 }
