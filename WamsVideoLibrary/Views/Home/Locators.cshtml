@@ -1,4 +1,4 @@
-﻿@model Microsoft.WindowsAzure.MediaServices.Client.LocatorCollection
+﻿@model Microsoft.WindowsAzure.MediaServices.Client.LocatorBaseCollection
 
 @{
     ViewBag.Title = "Locators";
@@ -22,7 +22,7 @@
         <td>@loc.Type</td>
         <td>@loc.StartTime</td>
         <td>@loc.ExpirationDateTime</td>
-        <td>@loc.Path</td>
+        
     </tr>
 }
 </table>

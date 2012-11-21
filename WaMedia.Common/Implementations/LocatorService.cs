@@ -159,7 +159,7 @@ namespace WaMedia.Common.Implementations
             // Create an 1-day readonly access policy. 
             IAccessPolicy streamingPolicy = this.MediaService.MediaContext.AccessPolicies.Create("Full Access Policy",
                 TimeSpan.FromMinutes(20),
-                AccessPermissions.List | AccessPermissions.Write);
+                AccessPermissions.List | AccessPermissions.Read | AccessPermissions.Read);
 
             // Create the origin locator. Set the start time as 5 minutes 
             // before the present so that the locator can be accessed immediately 
