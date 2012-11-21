@@ -46,7 +46,7 @@ Id: @Model.MediaAsset.Id
             <td>Primary</td>
             <td>File Size</td>
     </tr>
-    @foreach (var file in @Model.MediaAsset.Files)
+    @foreach (var file in @Model.MediaAsset.AssetFiles)
     {
         <tr>
             <td>@file.Id</td>

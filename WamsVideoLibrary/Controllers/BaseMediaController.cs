@@ -21,7 +21,7 @@ namespace WaMediaWeb.Controllers
         {
             if (this._mediaService == null)
             {
-                this._mediaService = new MediaService((CloudMediaContext)requestContext.HttpContext.Application["mctx"]);
+                this._mediaService = new MediaService(requestContext.HttpContext.Session["mctx"] as CloudMediaContext);
                 this._assetSErvice = new AssetService(this.MediaService);
                 this._jobService = new JobService(this.MediaService);
                 this._locatorService = new LocatorService(this.MediaService);

@@ -1,0 +1,14 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Create Media Context</h2>
+@using (Html.BeginForm("Init", "InitMedia", FormMethod.Post))
+{
+    <fieldset>
+        <legend>Account details</legend>
+        <div>Account: <input type="text" name="account" /></div>
+        <div>Key: <input type="text" name="key" /></div>
+        <div><input type="submit" value="create" /></div>
+    </fieldset>
+}

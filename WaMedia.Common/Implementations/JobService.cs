@@ -52,14 +52,14 @@ namespace WaMedia.Common.Implementations
             ITask task = job.Tasks.AddNew("New Encoding Task",
                 processor,
                 Tasks.H264_IIS_SMOOTH_STREAMING_HD_720P_CBR,
-                TaskCreationOptions.None);
+                TaskOptions.None);
             // Specify the input asset to be encoded.
-            task.InputMediaAssets.Add(asset.MediaAsset);
+            task.InputAssets.Add(asset.MediaAsset);
 
             //Add an output asset to contain the results of the job. 
             //This output is specified as AssetCreationOptions.None, which 
             //means the output asset is in the clear (unencrypted). 
-            IAsset mp4Asset = task.OutputMediaAssets.AddNew(asset.MediaAsset.Name + " smooth streaming",
+            IAsset mp4Asset = task.OutputAssets.AddNew(asset.MediaAsset.Name + " smooth streaming",
                 true,
                 AssetCreationOptions.None);
 
@@ -70,9 +70,9 @@ namespace WaMedia.Common.Implementations
                 ITask decryptTask = job.Tasks.AddNew("decryption task",
                     decryptProcessor,
                     string.Empty,
-                    TaskCreationOptions.None);
-                decryptTask.InputMediaAssets.Add(mp4Asset);
-                IAsset decryptedMp4 = decryptTask.OutputMediaAssets.AddNew(mp4Asset.Name + "Decrypted " + mp4Asset.Name, true, AssetCreationOptions.None);
+                    TaskOptions.None);
+                decryptTask.InputAssets.Add(mp4Asset);
+                IAsset decryptedMp4 = decryptTask.OutputAssets.AddNew(mp4Asset.Name + "Decrypted " + mp4Asset.Name, true, AssetCreationOptions.None);
             }
 
             ITask task3 = job.Tasks.AddNew("Thumnail creator",
@@ -83,17 +83,17 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
   <Time Value=""0:0:0""/>
   <Time Value=""0:0:4"" Step=""0:0:1"" Stop=""0:0:5""/>
 </Thumbnail>",
-                TaskCreationOptions.None);
-            task3.InputMediaAssets.Add(asset.MediaAsset);
-            IAsset thumbprintAssets = task3.OutputMediaAssets
+                TaskOptions.None);
+            task3.InputAssets.Add(asset.MediaAsset);
+            IAsset thumbprintAssets = task3.OutputAssets
                 .AddNew(asset.MediaAsset.Name + " Thumbprint", true, AssetCreationOptions.None);
 
             if (decrypt)
             {
                 ITask decryptThumbnails = job.Tasks
-                    .AddNew(mp4Asset.Name + "Decrypted thumbnails", decryptProcessor, string.Empty, TaskCreationOptions.None);
-                decryptThumbnails.InputMediaAssets.Add(thumbprintAssets);
-                decryptThumbnails.OutputMediaAssets.AddNew(thumbprintAssets.Name + " Thumbnails", true, AssetCreationOptions.None);
+                    .AddNew(mp4Asset.Name + "Decrypted thumbnails", decryptProcessor, string.Empty, TaskOptions.None);
+                decryptThumbnails.InputAssets.Add(thumbprintAssets);
+                decryptThumbnails.OutputAssets.AddNew(thumbprintAssets.Name + " Thumbnails", true, AssetCreationOptions.None);
             }
             // Launch the job. 
             job.Submit();
@@ -114,14 +114,14 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
             ITask task = job.Tasks.AddNew("New Decrypting",
                 processor,
                 string.Empty,
-                TaskCreationOptions.None);
+                TaskOptions.None);
             // Specify the input asset to be encoded.
-            task.InputMediaAssets.Add(theAsset.MediaAsset);
+            task.InputAssets.Add(theAsset.MediaAsset);
 
             //Add an output asset to contain the results of the job. 
             //This output is specified as AssetCreationOptions.None, which 
             //means the output asset is in the clear (unencrypted). 
-            IAsset decruptedAsset = task.OutputMediaAssets
+            IAsset decruptedAsset = task.OutputAssets
                 .AddNew(theAsset.MediaAsset.Name + " decrypted",
                 true,
                 AssetCreationOptions.None);
@@ -144,14 +144,14 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
             ITask task = job.Tasks.AddNew("Ad-hoc Task",
                 processor,
                 taskPreset,
-                TaskCreationOptions.None);
+                TaskOptions.None);
             // Specify the input asset to be encoded.
-            task.InputMediaAssets.Add(asset.MediaAsset);
+            task.InputAssets.Add(asset.MediaAsset);
 
             //Add an output asset to contain the results of the job. 
             //This output is specified as AssetCreationOptions.None, which 
             //means the output asset is in the clear (unencrypted). 
-            IAsset outputAsset = task.OutputMediaAssets.AddNew(asset.MediaAsset.Name + " result ",
+            IAsset outputAsset = task.OutputAssets.AddNew(asset.MediaAsset.Name + " result ",
                 true,
                 AssetCreationOptions.None);
             job.Submit();
@@ -190,6 +190,35 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
             return string.Format(task, contentKey, keyId, keySeed, playReadyServerUrl);
         }
 
-
+        public string GetSmoothToHlsTask()
+        {
+            return @"
+<taskDefinition xmlns='http://schemas.microsoft.com/iis/media/v4/TM/TaskDefinition#'>
+    <name>Smooth Streams to Apple HTTP Live Streams</name>
+  <id>A72D7A5D-3022-45f2-89B4-1DDC5457C111</id>
+    <description xml:lang='en'>Converts on-demand Smooth Streams encoded with H.264 (AVC) video and AAC-LC audio codecs to Apple HTTP Live Streams (MPEG-2 TS) and creates an Apple HTTP Live Streaming playlist (.m3u8) file for the converted presentation.</description>
+    <inputDirectory></inputDirectory>
+    <outputFolder>TS_Out</outputFolder>
+    <properties namespace='http://schemas.microsoft.com/iis/media/AppleHTTP#' prefix='hls'>
+        <property name='maxbitrate' required='true' value='8500000' helpText='The maximum bit rate, in bits per second (bps), to be converted to MPEG-2 TS. On-demand Smooth Streams at or below this value are converted to MPEG-2 TS segments. Smooth Streams above this value are not converted. Most Apple devices can play media encoded at bit rates up to 8,500 Kbps.'/>
+        <property name='manifest' required='false' value='' helpText='The file name to use for the converted Apple HTTP Live Streaming playlist file (a file with an .m3u8 file name extension). If no value is specified, the following default value is used: &lt;ISM_file_name&gt;-m3u8-aapl.m3u8'/>
+        <property name='segment' required='false' value='10' helpText='The duration of each MPEG-2 TS segment, in seconds. 10 seconds is the Apple-recommended setting for most Apple mobile digital devices.'/>
+        <property name='log'  required='false' value='' helpText='The file name to use for a log file (with a .log file name extension) that records the conversion activity. If you specify a log file name, the file is stored in the task output folder.' />
+        <property name='encrypt'  required='false' value='false' helpText='Enables encryption of MPEG-2 TS segments by using the Advanced Encryption Standard (AES) with a 128-bit key (AES-128).' />
+        <property name='pid'  required='false' value='' helpText='The program ID of the MPEG-2 TS presentation. Different encodings of MPEG-2 TS streams in the same presentation use the same program ID so that clients can easily switch between bit rates.' />
+        <property name='codecs'  required='false' value='false' helpText='Enables codec format identifiers, as defined by RFC 4281, to be included in the Apple HTTP Live Streaming playlist (.m3u8) file.' />
+        <property name='backwardcompatible'  required='false' value='false' helpText='Enables playback of the MPEG-2 TS presentation on devices that use the Apple iOS 3.0 mobile operating system.' />
+        <property name='allowcaching'  required='false' value='true' helpText='Enables the MPEG-2 TS segments to be cached on Apple devices for later playback.' />
+        <property name='passphrase'  required='false' value='' helpText='A passphrase that is used to generate the content key identifier.' />
+        <property name='key'  required='false' value='' helpText='The hexadecimal representation of the 16-octet content key value that is used for encryption.' />
+        <property name='keyuri'  required='false' value='' helpText='An alternate URI to be used by clients for downloading the key file. If no value is specified, it is assumed that the Live Smooth Streaming publishing point provides the key file.' />
+        <property name='overwrite'  required='false' value='true' helpText='Enables existing files in the output folder to be overwritten if converted output files have identical file names.' />
+    </properties>
+    <taskCode>
+        <type>Microsoft.Web.Media.TransformManager.SmoothToHLS.SmoothToHLSTask, Microsoft.Web.Media.TransformManager.SmoothToHLS, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35</type>
+    </taskCode>
+</taskDefinition>
+";
+        }
     }
 }

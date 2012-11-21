@@ -10,6 +10,7 @@ namespace WaMedia.Common.Contracts
     {
         IMediaService MediaService { get; }
         string GetSmoothStreamingOriginLocator(Asset assetToStream);
+        string GetHLSOriginLocator(Asset assetToStream);
         string GetMp4StreamingOriginLocator(Asset assetToStream);
         string GetSmoothStreamingAzureCDNLocator(Models.Asset assetToStream);
         string GetSasLocator(Asset asset);

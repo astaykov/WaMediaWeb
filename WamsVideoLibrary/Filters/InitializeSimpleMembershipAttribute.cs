@@ -5,6 +5,7 @@ using System.Threading;
 using System.Web.Mvc;
 using WebMatrix.WebData;
 using WamsVideoLibrary.Models;
+using WamsVideoLibrary.Controllers;
 
 namespace WamsVideoLibrary.Filters
 {
@@ -45,6 +46,26 @@ namespace WamsVideoLibrary.Filters
                     throw new InvalidOperationException("The ASP.NET Simple Membership database could not be initialized. For more information, please see http://go.microsoft.com/fwlink/?LinkId=256588", ex);
                 }
             }
+        }
+    }
+
+    public sealed class InitializeMediaContextAttribute : ActionFilterAttribute
+    {
+        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            Type cType = filterContext.ActionDescriptor.ControllerDescriptor.ControllerType;
+            if (filterContext.HttpContext.Session["mctx"] == null)
+            {
+                // need to create the context - so redirect to InitiMediaController
+                // but if it is request to InitiMediaController, just pass it by
+                if (!cType.Equals(typeof(InitMediaController)))
+                {
+                    filterContext.HttpContext.Response.Redirect("~/InitMedia/");
+                }
+            }
+            
+            
+            base.OnActionExecuting(filterContext);
         }
     }
 }

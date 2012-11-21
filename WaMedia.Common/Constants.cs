@@ -10,6 +10,7 @@ namespace WaMedia.Common
         public const string WINDOWS_AZURE_MEDIA_ENCODER = "Windows Azure Media Encoder";
         public const string STORAGE_DECRYPTION_ENCODER = "Storage Decryption";
         public const string PLAY_READY_ENCODER = "PlayReady Protection Task";
+        public const string SMOOTH_TO_HLS = "Smooth Streams to HLS Task";
     }
 
     public class Tasks

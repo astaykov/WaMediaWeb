@@ -18,5 +18,6 @@ namespace WaMedia.Common.Contracts
         void DeleteJob(string jobId);
         void CancelJob(string jobId);
         string GetPlayReadyTask(string contentKey = "", string keyId = "", string keySeed = "", string playReadyServerUrl = "");
+        string GetSmoothToHlsTask();
     }
 }

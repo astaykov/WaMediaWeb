@@ -12,7 +12,7 @@ namespace WaMedia.Common
         public static bool HasThumbnail(this IAsset src)
         {
             
-            var file = (from f in src.Files where f.Name.EndsWith(".jpg") && !f.IsEncrypted select f).FirstOrDefault();
+            var file = (from f in src.AssetFiles where f.Name.EndsWith(".jpg") && !f.IsEncrypted select f).FirstOrDefault();
             return (file != null);
         }
     }

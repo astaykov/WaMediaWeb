@@ -25,18 +25,6 @@ namespace WamsVideoLibrary
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             AuthConfig.RegisterAuth();
-
-            // keep an instance of the CloudMediaContext in the Application State
-            // because its creation is expensive
-            this.InitiMediaContext();
         }
-
-        private void InitiMediaContext()
-        {
-            string mediaAccount = ConfigurationManager.AppSettings["MediaAccount"];
-            string mediaKey = ConfigurationManager.AppSettings["MediaKey"];
-            Application["mctx"] = new CloudMediaContext(mediaAccount, mediaKey);
-        }
-
     }
 }

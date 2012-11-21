@@ -49,9 +49,9 @@ namespace WaMedia.Common.Implementations
             var src = asset;
             if (asset.State == AssetState.Initialized)
             {
-                asset.Publish();
+                // NO PUBLISH anymore!?
             }
-            var file = (from f in src.Files where f.Name.EndsWith(".jpg") && f.IsPrimary && !f.IsEncrypted select f).FirstOrDefault();
+            var file = (from f in src.AssetFiles where f.Name.EndsWith(".jpg") && f.IsPrimary && !f.IsEncrypted select f).FirstOrDefault();
             if (file == null)
             {
                 return null;
@@ -80,18 +80,28 @@ namespace WaMedia.Common.Implementations
             return originLocator.Path + file.Name;
         }
 
+        /// <summary>
+        /// Creates the asset. Note, there is a breaking change in the new SDK!
+        /// You have to first create the Asset, which is always empty.
+        /// Then create a file within that asset, then upload a content the newly created file
+        /// </summary>
+        /// <param name="pathToFile">The path to file.</param>
         public void CreateAsset(string pathToFile)
         {
-            this.MediaService.MediaContext.Assets.Create(pathToFile, AssetCreationOptions.None);
+            IAsset newAsset = this.MediaService.MediaContext.Assets.Create(pathToFile, AssetCreationOptions.None);
+            // note, the file to be uploaded must match (case insensitive)
+            // to the Name property of the IAssetFile instance we are uploading to
+            IAssetFile file = newAsset.AssetFiles.Create(System.IO.Path.GetFileName(pathToFile));
+            file.Upload(pathToFile);
         }
-
 
         public void Publish(string assetId)
         {
             var asset = this.GetAssetById(assetId);
             if (asset != null)
             {
-                asset.MediaAsset.Publish();
+               // asset.MediaAsset.Publish();
+                // no Publish in the new SDK, what to do now?
             }
         }
 
@@ -102,16 +112,16 @@ namespace WaMedia.Common.Implementations
             var files = (
                 from a in this.MediaService.MediaContext.Assets
                 where a.ParentAssets.Contains(asset.MediaAsset)
-                 && a.Files.Count > 0
-                 && a.Files.Where(f => f.Name.EndsWith(".jpg") && f.IsPrimary).FirstOrDefault() != null
-                select a.Files.Where(f => f.Name.EndsWith(".jpg") && f.IsPrimary).FirstOrDefault()
+                 && a.AssetFiles.Count() > 0
+                 && a.AssetFiles.Where(f => f.Name.EndsWith(".jpg") && f.IsPrimary).FirstOrDefault() != null
+                select a.AssetFiles.Where(f => f.Name.EndsWith(".jpg") && f.IsPrimary).FirstOrDefault()
                     );
             var file = files.FirstOrDefault();
             if (file != null)
             {
                 var tmpPath = System.IO.Path.GetTempPath();
                 var tmpName = System.IO.Path.Combine(tmpPath, file.Name);
-                file.DownloadToFile(tmpName);
+                file.Download(tmpName);
             }
         }
 
@@ -122,14 +132,14 @@ namespace WaMedia.Common.Implementations
 
             foreach (var locator in this.MediaService.MediaContext.Locators.Where(l => l.AssetId.Equals(assetId)))
             {
-                this.MediaService.MediaContext.Locators.Revoke(locator);
+                locator.Delete();
             }
             for (int i = 0; i < asset.MediaAsset.ContentKeys.Count; i++)
             {
                 asset.MediaAsset.ContentKeys.RemoveAt(0);
             }
-            this.MediaService.MediaContext.Assets.Update(asset.MediaAsset);
-            this.MediaService.MediaContext.Assets.Delete(asset.MediaAsset);
+            asset.MediaAsset.Update();
+            asset.MediaAsset.Delete();
         }
 
         public void Rename(string assetId, string newName)
@@ -138,13 +148,13 @@ namespace WaMedia.Common.Implementations
             if (asset != null)
             {
                 asset.MediaAsset.Name = newName;
-                this.MediaService.MediaContext.Assets.Update(asset.MediaAsset);
+                asset.MediaAsset.Update();
             }
         }
 
         public void CreateEmptyAsset(string name)
         {
-            this.MediaService.MediaContext.Assets.CreateEmptyAsset(name, AssetCreationOptions.None);
+            this.MediaService.MediaContext.Assets.Create(name, AssetCreationOptions.None);
         }
 
 

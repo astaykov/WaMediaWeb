@@ -43,7 +43,7 @@ namespace WaMedia.Common.Implementations
             List<IContentKey> keys = this.MediaContext.ContentKeys.ToList();
             foreach (var loc in locators)
             {
-                this.MediaContext.Locators.Revoke(loc);
+                loc.Delete();
             }
             foreach (var job in jobs)
             {
@@ -56,8 +56,8 @@ namespace WaMedia.Common.Implementations
                 {
                     asset.ContentKeys.Remove(key);
                 }
-                this.MediaContext.Assets.Update(asset);
-                this.MediaContext.Assets.Delete(asset);
+                asset.Update();
+                asset.Delete();
             }
            
             //// just don't delete the keys! Your media account will not work anymore

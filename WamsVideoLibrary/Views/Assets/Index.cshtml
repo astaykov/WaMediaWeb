@@ -60,13 +60,11 @@
             <td>
                 @Html.ActionLink("[details]", "Details", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[streaming url]", "GetStreamingUrl", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[HLS URL]", "GetHlsStreamingUrl", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[streaming CDN]", "GetCDNStreamingUrl", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[progressive mp4 url]", "GetMp4StreamingUrl", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[encode]", "EncodeAndConvert", new { assetId = @asset.MediaAsset.Id })
-                @Html.ActionLink("[decrypt]", "DecryptAsset", new { assetId = @asset.MediaAsset.Id })
-                @Html.ActionLink("[publish]", "PublishAsset", new { assetId = @asset.MediaAsset.Id })
-                @Html.ActionLink("[convert to mp4]", "ConvertToMp4", new { assetId = @asset.MediaAsset.Id })
-                @Html.ActionLink("[convert to PlayReady]", "ConvertToPlayReady", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[HLS]", "ConvertToHls", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[SAS URL]", "GetSasUrl", new { assetId = @asset.MediaAsset.Id });
                 @Html.ActionLink("[~ DELETE ~]", "DeleteAsset", new { assetId = @asset.MediaAsset.Id })
             </td>

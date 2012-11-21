@@ -71,8 +71,19 @@ namespace WaMediaWeb.Controllers
             {
                 return HttpNotFound();
             }
-            return View(new StreamingUrlViewModel() { Url = streamingUrl });
+            return View(new StreamingUrlViewModel() { Url = streamingUrl, IsMp4Progressive = false });
 
+        }
+
+        public ActionResult GetHlsStreamingUrl(string assetId)
+        {
+            var asset = this.AssetService.GetAssetById(assetId);
+            string streamingUrl = this.LocatorService.GetHLSOriginLocator(asset);
+            if (string.IsNullOrWhiteSpace(streamingUrl))
+            {
+                return HttpNotFound();
+            }
+            return View("GetStreamingUrl", new StreamingUrlViewModel() { Url = streamingUrl, IsMp4Progressive = false });
         }
 
         public ActionResult GetCDNStreamingUrl(string assetId)
@@ -93,6 +104,7 @@ namespace WaMediaWeb.Controllers
             string streamingUrl = this.LocatorService.GetMp4StreamingOriginLocator(asset);
             StreamingUrlViewModel model = new StreamingUrlViewModel();
             model.Url = streamingUrl;
+            model.IsMp4Progressive = true;
             return View("GetStreamingUrl", model);
         }
 
@@ -121,6 +133,13 @@ namespace WaMediaWeb.Controllers
         {
             var asset = this.AssetService.GetAssetById(assetId);
             this.JobService.CreateNewJob(asset, MediaEncoders.PLAY_READY_ENCODER, this.JobService.GetPlayReadyTask(keySeed: PlayReady.DEV_SERVER_KEY_SEED, playReadyServerUrl: PlayReady.DEV_SERVER_LICENSE_URL));
+            return RedirectToAction("Index", "Jobs");
+        }
+
+        public ActionResult ConvertToHls(string assetId)
+        {
+            var asset = this.AssetService.GetAssetById(assetId);
+            this.JobService.CreateNewJob(asset, MediaEncoders.SMOOTH_TO_HLS, this.JobService.GetSmoothToHlsTask());
             return RedirectToAction("Index", "Jobs");
         }
 
