@@ -166,7 +166,7 @@ namespace WaMedia.Common.Implementations
             // if there is clock skew between the client and server.
             ILocator sasLocator =
                 (from l in this.MediaService.MediaContext.Locators
-                 where l.Type == LocatorType.Sas
+                 where l.Type == LocatorType.Sas && l.AssetId.Equals(asset.MediaAsset.Id)
                  select l).FirstOrDefault();
 
             if (sasLocator != null && sasLocator.ExpirationDateTime < DateTime.UtcNow)
