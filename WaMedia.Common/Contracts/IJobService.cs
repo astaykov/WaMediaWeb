@@ -19,5 +19,6 @@ namespace WaMedia.Common.Contracts
         void CancelJob(string jobId);
         string GetPlayReadyTask(string contentKey = "", string keyId = "", string keySeed = "", string playReadyServerUrl = "");
         string GetSmoothToHlsTask();
+        void CreateThumbnails(Models.Asset asset);
     }
 }

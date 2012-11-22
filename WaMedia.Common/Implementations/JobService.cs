@@ -37,6 +37,30 @@ namespace WaMedia.Common.Implementations
             }
         }
 
+        public void CreateThumbnails(Models.Asset asset)
+        {
+            // Declare a new job.
+            IJob job = this.MediaService.MediaContext.Jobs.Create(asset.MediaAsset.Name + " Thumbnails");
+            // Get a media processor reference, and pass to it the name of the 
+            // processor to use for the specific task. Use a method like the 
+            // GetMediaProcessor method shown in this document.
+            IMediaProcessor processor = this.MediaService
+                .GetMediaProcessorByName(MediaEncoders.WINDOWS_AZURE_MEDIA_ENCODER);
+
+            ITask task3 = job.Tasks.AddNew("Thumnail creator",
+                processor,
+                @"<?xml version=""1.0"" encoding=""utf-16""?>
+<Thumbnail Size=""150,150"" Type=""Jpeg"" 
+Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
+  <Time Value=""0:0:4"" Step=""0:0:1"" Stop=""0:0:5""/>
+</Thumbnail>",
+                TaskOptions.None);
+            task3.InputAssets.Add(asset.MediaAsset);
+            IAsset thumbprintAssets = task3.OutputAssets
+                .AddNew(asset.MediaAsset.Name + " Thumbpnails", true, AssetCreationOptions.None);
+
+            job.Submit();
+        }
 
         public void CreateEncodeToSmoothStreamingJob(Models.Asset asset, bool decrypt = false)
         {
@@ -78,15 +102,15 @@ namespace WaMedia.Common.Implementations
             ITask task3 = job.Tasks.AddNew("Thumnail creator",
                 processor,
                 @"<?xml version=""1.0"" encoding=""utf-16""?>
-<Thumbnail Size=""80,60"" Type=""Jpeg"" 
+<Thumbnail Size=""150,150"" Type=""Jpeg"" 
 Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
-  <Time Value=""0:0:0""/>
+  <Time Value=""0:0:1""/>
   <Time Value=""0:0:4"" Step=""0:0:1"" Stop=""0:0:5""/>
 </Thumbnail>",
                 TaskOptions.None);
             task3.InputAssets.Add(asset.MediaAsset);
             IAsset thumbprintAssets = task3.OutputAssets
-                .AddNew(asset.MediaAsset.Name + " Thumbprint", true, AssetCreationOptions.None);
+                .AddNew(asset.MediaAsset.Name + " Thumbpnails", true, AssetCreationOptions.None);
 
             if (decrypt)
             {

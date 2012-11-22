@@ -129,6 +129,14 @@ namespace WaMediaWeb.Controllers
             return RedirectToAction("Index", "Jobs");
         }
 
+        public ActionResult CreateThumbnails(string assetId)
+        {
+            var asset = this.AssetService.GetAssetById(assetId);
+            this.JobService.CreateThumbnails(asset);
+            //this.JobService.CreateNewJob(asset, MediaEncoders.WINDOWS_AZURE_MEDIA_ENCODER, Tasks.H264_512k_DSL_CBR);
+            return RedirectToAction("Index", "Jobs");
+        }
+
         public ActionResult ConvertToPlayReady(string assetId)
         {
             var asset = this.AssetService.GetAssetById(assetId);
