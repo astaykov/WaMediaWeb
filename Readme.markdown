@@ -1,7 +1,10 @@
 # A Windows Azure Media Services explorative sample #
 
 This sample is an MVC showcase app for basic functionalities of WAMS. The MVC App relies on a Common library.
-To start simply put your MediaAccount and MediaKey in the web.config of the Web App, appSettings section.
+When you run the application for first time it will ask for your Media Account & Key.
+These details will be used to initialize the CloudMediaContext and put it into a Session State.
+There is a global filter that looks after having a valid CloudMediaContext in the Session and if
+none found, it redirects the user to the page requesting the Media Services Credentials.
 
 ## WaMedia.Common library architecture. ##
 
