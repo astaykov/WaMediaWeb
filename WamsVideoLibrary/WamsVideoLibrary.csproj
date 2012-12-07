@@ -369,8 +369,6 @@
     <Content Include="Views\Assets\GetSasUrl.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Properties\PublishProfiles\wamediaweb - FTP.pubxml" />
-    <None Include="Properties\PublishProfiles\wamediaweb - Web Deploy.pubxml" />
     <Content Include="Views\InitMedia\Index.cshtml" />
   </ItemGroup>
   <PropertyGroup>

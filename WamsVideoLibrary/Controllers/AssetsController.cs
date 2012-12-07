@@ -18,7 +18,12 @@ namespace WaMediaWeb.Controllers
 
         public ActionResult CreateMediaAsset()
         {
-            var tmpName = System.IO.Path.GetTempPath();
+            var tmpName = Server.MapPath("~/tmpuploads");
+            if (!System.IO.Directory.Exists(tmpName))
+            {
+                System.IO.Directory.CreateDirectory(tmpName);
+            }
+
             string pathToTempFile = System.IO.Path.Combine(tmpName, "Unknown");
             if (Request.Files.Count > 0)
             {

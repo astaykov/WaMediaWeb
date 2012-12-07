@@ -88,7 +88,7 @@ namespace WaMedia.Common.Implementations
         /// <param name="pathToFile">The path to file.</param>
         public void CreateAsset(string pathToFile)
         {
-            IAsset newAsset = this.MediaService.MediaContext.Assets.Create(pathToFile, AssetCreationOptions.None);
+            IAsset newAsset = this.MediaService.MediaContext.Assets.Create(System.IO.Path.GetFileName(pathToFile), AssetCreationOptions.None);
             // note, the file to be uploaded must match (case insensitive)
             // to the Name property of the IAssetFile instance we are uploading to
             IAssetFile file = newAsset.AssetFiles.Create(System.IO.Path.GetFileName(pathToFile));
