@@ -15,7 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", 
 		references\Microsoft.WindowsAzure.Configuration.dll = references\Microsoft.WindowsAzure.Configuration.dll
 		references\Microsoft.WindowsAzure.Configuration.pdb = references\Microsoft.WindowsAzure.Configuration.pdb
 		references\Microsoft.WindowsAzure.StorageClient.dll = references\Microsoft.WindowsAzure.StorageClient.dll
-		references\Microsoft.WindowsAzure.StorageClient.pdb = references\Microsoft.WindowsAzure.StorageClient.pdb
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{CC85FF00-4FEF-4A1C-AEC0-2D02C6F7C4AE}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
 Global

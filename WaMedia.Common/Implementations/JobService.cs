@@ -57,7 +57,7 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
                 TaskOptions.None);
             task3.InputAssets.Add(asset.MediaAsset);
             IAsset thumbprintAssets = task3.OutputAssets
-                .AddNew(asset.MediaAsset.Name + " Thumbpnails", true, AssetCreationOptions.None);
+                .AddNew(asset.MediaAsset.Name + " Thumbpnails", AssetCreationOptions.None);
 
             job.Submit();
         }
@@ -75,7 +75,7 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
             //  Create a task with the encoding details, using a string preset.
             ITask task = job.Tasks.AddNew("New Encoding Task",
                 processor,
-                Tasks.H264_IIS_SMOOTH_STREAMING_HD_720P_CBR,
+                Tasks.VC1_SMOOTH_STREAMING_HD_720P,
                 TaskOptions.None);
             // Specify the input asset to be encoded.
             task.InputAssets.Add(asset.MediaAsset);
@@ -84,7 +84,6 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
             //This output is specified as AssetCreationOptions.None, which 
             //means the output asset is in the clear (unencrypted). 
             IAsset mp4Asset = task.OutputAssets.AddNew(asset.MediaAsset.Name + " smooth streaming",
-                true,
                 AssetCreationOptions.None);
 
             IMediaProcessor decryptProcessor = this.MediaService.
@@ -96,7 +95,7 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
                     string.Empty,
                     TaskOptions.None);
                 decryptTask.InputAssets.Add(mp4Asset);
-                IAsset decryptedMp4 = decryptTask.OutputAssets.AddNew(mp4Asset.Name + "Decrypted " + mp4Asset.Name, true, AssetCreationOptions.None);
+                IAsset decryptedMp4 = decryptTask.OutputAssets.AddNew(mp4Asset.Name + "Decrypted " + mp4Asset.Name, AssetCreationOptions.None);
             }
 
             ITask task3 = job.Tasks.AddNew("Thumnail creator",
@@ -110,14 +109,14 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
                 TaskOptions.None);
             task3.InputAssets.Add(asset.MediaAsset);
             IAsset thumbprintAssets = task3.OutputAssets
-                .AddNew(asset.MediaAsset.Name + " Thumbpnails", true, AssetCreationOptions.None);
+                .AddNew(asset.MediaAsset.Name + " Thumbpnails", AssetCreationOptions.None);
 
             if (decrypt)
             {
                 ITask decryptThumbnails = job.Tasks
                     .AddNew(mp4Asset.Name + "Decrypted thumbnails", decryptProcessor, string.Empty, TaskOptions.None);
                 decryptThumbnails.InputAssets.Add(thumbprintAssets);
-                decryptThumbnails.OutputAssets.AddNew(thumbprintAssets.Name + " Thumbnails", true, AssetCreationOptions.None);
+                decryptThumbnails.OutputAssets.AddNew(thumbprintAssets.Name + " Thumbnails", AssetCreationOptions.None);
             }
             // Launch the job. 
             job.Submit();
@@ -147,7 +146,6 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
             //means the output asset is in the clear (unencrypted). 
             IAsset decruptedAsset = task.OutputAssets
                 .AddNew(theAsset.MediaAsset.Name + " decrypted",
-                true,
                 AssetCreationOptions.None);
             // Launch the job. 
             job.Submit();
@@ -176,7 +174,6 @@ Filename=""{OriginalFilename}_{ThumbnailTime}.{DefaultExtension}"">
             //This output is specified as AssetCreationOptions.None, which 
             //means the output asset is in the clear (unencrypted). 
             IAsset outputAsset = task.OutputAssets.AddNew(asset.MediaAsset.Name + " result ",
-                true,
                 AssetCreationOptions.None);
             job.Submit();
         }
