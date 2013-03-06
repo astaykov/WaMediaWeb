@@ -66,10 +66,12 @@
                 @Html.ActionLink("[Smooth enc.]", "EncodeAndConvert", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[HLS enc.]", "ConvertToHls", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[MP4 enc.]", "ConvertToMp4", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[PlayReady ENC.]", "ConvertToPlayReady", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[Gen. Thumbnails]", "CreateThumbnails", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[SAS URL]", "GetSasUrl", new { assetId = @asset.MediaAsset.Id });
                 @Html.ActionLink("[~ DELETE ~]", "DeleteAsset", new { assetId = @asset.MediaAsset.Id })
-            </td>
+           
+                 </td>
         </tr>
     }
 </table>

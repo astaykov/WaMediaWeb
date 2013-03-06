@@ -9,8 +9,9 @@ namespace WaMedia.Common
     {
         public const string WINDOWS_AZURE_MEDIA_ENCODER = "Windows Azure Media Encoder";
         public const string WINDOWS_AZURE_MEDIA_PACKAGER = "Windows Azure Media Packager";
+        public const string WINDOWS_AZURE_MEDIA_ENCRYPTOR = "Windows Azure Media Encryptor";
         public const string STORAGE_DECRYPTION_ENCODER = "Storage Decryption";
-        public const string PLAY_READY_ENCODER = "PlayReady Protection Task";
+        public const string PLAY_READY_ENCODER = "Windows Azure Media Encryptor";
         public const string SMOOTH_TO_HLS = "Smooth Streams to HLS Task";
     }
 

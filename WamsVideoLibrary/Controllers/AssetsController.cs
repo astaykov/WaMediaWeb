@@ -145,14 +145,14 @@ namespace WaMediaWeb.Controllers
         public ActionResult ConvertToPlayReady(string assetId)
         {
             var asset = this.AssetService.GetAssetById(assetId);
-            this.JobService.CreateNewJob(asset, MediaEncoders.PLAY_READY_ENCODER, this.JobService.GetPlayReadyTask(keySeed: PlayReady.DEV_SERVER_KEY_SEED, playReadyServerUrl: PlayReady.DEV_SERVER_LICENSE_URL));
+            this.JobService.CreateNewJob(asset, MediaEncoders.WINDOWS_AZURE_MEDIA_ENCRYPTOR, this.JobService.GetPlayReadyTask(keySeed: PlayReady.DEV_SERVER_KEY_SEED, playReadyServerUrl: PlayReady.DEV_SERVER_LICENSE_URL));
             return RedirectToAction("Index", "Jobs");
         }
 
         public ActionResult ConvertToHls(string assetId)
         {
             var asset = this.AssetService.GetAssetById(assetId);
-            this.JobService.CreateNewJob(asset, MediaEncoders.SMOOTH_TO_HLS, this.JobService.GetSmoothToHlsTask());
+            this.JobService.CreateNewJob(asset, MediaEncoders.WINDOWS_AZURE_MEDIA_PACKAGER, this.JobService.GetSmoothToHlsTask());
             return RedirectToAction("Index", "Jobs");
         }
 
