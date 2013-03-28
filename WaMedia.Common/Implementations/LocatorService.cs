@@ -43,6 +43,12 @@ namespace WaMedia.Common.Implementations
                       && l.Type == LocatorType.OnDemandOrigin
                  select l).FirstOrDefault();
 
+            if (originLocator != null && originLocator.ExpirationDateTime <= DateTime.UtcNow)
+            {
+                originLocator.Delete();
+                originLocator = null;
+            }
+
             if (originLocator == null)
             {
                 originLocator = this.MediaService.MediaContext
@@ -84,6 +90,12 @@ namespace WaMedia.Common.Implementations
                 (from l in this.MediaService.MediaContext.Locators
                  where l.AssetId.Equals(assetToStream.MediaAsset.Id) && l.Type == LocatorType.None
                  select l).FirstOrDefault();
+
+            if (originLocator != null && originLocator.ExpirationDateTime <= DateTime.UtcNow)
+            {
+                originLocator.Delete();
+                originLocator = null;
+            }
 
             if (originLocator == null)
             {
@@ -220,6 +232,12 @@ namespace WaMedia.Common.Implementations
                  where l.AssetId.Equals(assetToStream.MediaAsset.Id)
                  && l.Type == LocatorType.OnDemandOrigin
                  select l).FirstOrDefault();
+
+            if (originLocator != null && originLocator.ExpirationDateTime <= DateTime.UtcNow)
+            {
+                originLocator.Delete();
+                originLocator = null;
+            }
 
             if (originLocator == null)
             {
