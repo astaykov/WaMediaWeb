@@ -130,7 +130,6 @@ namespace WaMediaWeb.Controllers
         {
             var asset = this.AssetService.GetAssetById(assetId);
             this.JobService.CreateNewJob(asset, MediaEncoders.WINDOWS_AZURE_MEDIA_ENCODER, Tasks.H264_HD_720P_VBR);
-            //this.JobService.CreateNewJob(asset, MediaEncoders.WINDOWS_AZURE_MEDIA_ENCODER, Tasks.H264_512k_DSL_CBR);
             return RedirectToAction("Index", "Jobs");
         }
 
@@ -153,6 +152,13 @@ namespace WaMediaWeb.Controllers
         {
             var asset = this.AssetService.GetAssetById(assetId);
             this.JobService.CreateNewJob(asset, MediaEncoders.WINDOWS_AZURE_MEDIA_PACKAGER, this.JobService.GetSmoothToHlsTask());
+            return RedirectToAction("Index", "Jobs");
+        }
+
+        public ActionResult ConvertToMultiBitrateMp4(string assetId)
+        {
+            var asset = this.AssetService.GetAssetById(assetId);
+            this.JobService.CreateNewJob(asset, MediaEncoders.WINDOWS_AZURE_MEDIA_ENCODER, Tasks.H264_ADAPTIVE_BITRATE_SD_16x9);
             return RedirectToAction("Index", "Jobs");
         }
 

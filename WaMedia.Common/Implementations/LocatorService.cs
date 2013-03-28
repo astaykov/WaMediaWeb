@@ -40,6 +40,7 @@ namespace WaMedia.Common.Implementations
             ILocator originLocator =
                 (from l in this.MediaService.MediaContext.Locators
                  where l.AssetId.Equals(assetToStream.MediaAsset.Id)
+                      && l.Type == LocatorType.OnDemandOrigin
                  select l).FirstOrDefault();
 
             if (originLocator == null)
@@ -125,6 +126,7 @@ namespace WaMedia.Common.Implementations
             ILocator originLocator =
                 (from l in this.MediaService.MediaContext.Locators
                  where l.AssetId.Equals(assetToStream.MediaAsset.Id)
+                 && l.Type == LocatorType.Sas
                  select l).FirstOrDefault();
 
             if (originLocator != null && originLocator.ExpirationDateTime <= DateTime.UtcNow)
@@ -216,6 +218,7 @@ namespace WaMedia.Common.Implementations
             ILocator originLocator =
                 (from l in this.MediaService.MediaContext.Locators
                  where l.AssetId.Equals(assetToStream.MediaAsset.Id)
+                 && l.Type == LocatorType.OnDemandOrigin
                  select l).FirstOrDefault();
 
             if (originLocator == null)
