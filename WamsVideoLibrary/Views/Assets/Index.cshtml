@@ -64,6 +64,7 @@
                 @Html.ActionLink("[streaming CDN]", "GetCDNStreamingUrl", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[progressive mp4 url]", "GetMp4StreamingUrl", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[Smooth enc.]", "EncodeAndConvert", new { assetId = @asset.MediaAsset.Id })
+                @Html.ActionLink("[Smooth Pack.]", "Mp4ToSmooth", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[HLS enc.]", "ConvertToHls", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[MP4 enc.]", "ConvertToMp4", new { assetId = @asset.MediaAsset.Id })
                 @Html.ActionLink("[Multi bitrate MP4 enc.]", "ConvertToMultiBitrateMp4", new { assetId = @asset.MediaAsset.Id })

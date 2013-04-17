@@ -73,9 +73,12 @@ namespace WaMedia.Common.Implementations
         public Microsoft.WindowsAzure.MediaServices.Client.IMediaProcessor GetMediaProcessorByName(string name)
         {
             // Query for a media processor to get a reference.
+            // Get the latest in version
             Microsoft.WindowsAzure.MediaServices.Client.IMediaProcessor processor =
-                (from p in this.MediaContext.MediaProcessors where p.Name.Equals(name) select p)
-                .FirstOrDefault();
+                (from p in this.MediaContext.MediaProcessors where p.Name == name select p)
+                .ToList()
+                .OrderBy(wame => new Version(wame.Version))
+                .LastOrDefault();
             if (processor == null)
             {
                 throw new ArgumentException(string.Format(System.Globalization.CultureInfo.CurrentCulture,

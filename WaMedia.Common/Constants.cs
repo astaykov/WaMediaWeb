@@ -17,7 +17,9 @@ namespace WaMedia.Common
 
     public class Tasks
     {
-        public const string H264_HD_720P_VBR = "H264 Broadband SD 4x3";
+        public const string H264_SD_4x3_CBR = "H264 Broadband SD 4x3";
+        public const string H264_HD_720P_CBR = "H264 Broadband 720p";
+        public const string H264_Smooth_720p_3G_4G = "H264 Smooth Streaming 720p for 3G or 4G";
         public const string VC1_SMOOTH_STREAMING_HD_720P = "VC1 Smooth Streaming 720p";
         public const string H264_ADAPTIVE_BITRATE_SD_16x9 = "H264 Adaptive Bitrate MP4 Set SD 16x9";
     }
