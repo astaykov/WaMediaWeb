@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MediaServices.Client;
+using System;
 using System.Linq;
-using Microsoft.WindowsAzure.MediaServices.Client;
 using WaMedia.Common.Contracts;
 
 namespace WaMedia.Common.Implementations

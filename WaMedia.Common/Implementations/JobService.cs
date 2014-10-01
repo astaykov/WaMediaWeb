@@ -1,9 +1,7 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure.MediaServices.Client;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WaMedia.Common.Contracts;
-using Microsoft.WindowsAzure.MediaServices.Client;
 
 namespace WaMedia.Common.Implementations
 {
@@ -20,7 +18,7 @@ namespace WaMedia.Common.Implementations
             this._mediaService = mediaService;
         }
 
-        public IEnumerable<Microsoft.WindowsAzure.MediaServices.Client.IJob> Jobs
+        public IEnumerable<IJob> Jobs
         {
             get
             {

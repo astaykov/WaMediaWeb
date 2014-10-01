@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Microsoft.WindowsAzure;
+using Microsoft.WindowsAzure.MediaServices.Client;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using WaMedia.Common.Contracts;
-using Microsoft.WindowsAzure.MediaServices.Client;
-using Microsoft.WindowsAzure;
 
 namespace WaMedia.Common.Implementations
 {
@@ -22,6 +21,7 @@ namespace WaMedia.Common.Implementations
         public MediaService()
         {
             this._mediaContext = new CloudMediaContext(_mediaAccount, _mediaKey);
+           
         }
 
         public MediaService(CloudMediaContext ctx)
@@ -29,8 +29,8 @@ namespace WaMedia.Common.Implementations
             this._mediaContext = ctx;
         }
 
-        private Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext _mediaContext;
-        public Microsoft.WindowsAzure.MediaServices.Client.CloudMediaContext MediaContext
+        private CloudMediaContext _mediaContext;
+        public CloudMediaContext MediaContext
         {
             get { return this._mediaContext; }
         }
@@ -70,7 +70,7 @@ namespace WaMedia.Common.Implementations
             
         }
 
-        public Microsoft.WindowsAzure.MediaServices.Client.IMediaProcessor GetMediaProcessorByName(string name)
+        public IMediaProcessor GetMediaProcessorByName(string name)
         {
             // Query for a media processor to get a reference.
             // Get the latest in version

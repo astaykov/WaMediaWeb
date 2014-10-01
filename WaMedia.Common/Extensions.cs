@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.WindowsAzure.MediaServices.Client;
+using System;
 using System.Linq;
-using System.Text;
-using Microsoft.WindowsAzure.MediaServices.Client;
 
 namespace WaMedia.Common
 {
